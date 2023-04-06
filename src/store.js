@@ -1,14 +1,7 @@
-import {createStore, compose, applyMiddleware} from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './reducers/reducer';
 
-const initialState = {};
-const enhancers = [];
-const composedEnhancers = compose(
- applyMiddleware(),
- ...enhancers,
-);
-export const store = createStore(
-    rootReducer,
-    initialState,
-    composedEnhancers
-   );
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+});

@@ -1,53 +1,56 @@
 
 import { combineReducers } from 'redux';
 
-const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
-const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
-const FILTER_ITEMS_BY_CONNECTION = 'FILTER_ITEMS_BY_CONNECTION';
-const FILTER_ITEMS_BY_DEPARTMENT = 'FILTER_ITEMS_BY_DEPARTMENT';
+import { Data } from '../components/ListComponent'
 
-const initialBrigadesState = {
-  items: [],
+const SET_LIST_DATA_DEFAULT = 'SET_LIST_DATA_DEFAULT';
+const SET_LIST_DATA_UI = 'SET_LIST_DATA_UI';
+
+export interface ListDataState {
+  listDataDefault: Data[],
+  listDataUi: Data[],
+  filterByDepID: string | null,
+  filterByConnection: string | null,
+  loading: boolean,
+  error: any,
+}
+
+const initialBrigadesState: ListDataState = {
+  listDataDefault: [],
+  listDataUi: [],
   error: null,
   loading: false,
   filterByConnection: localStorage.getItem('byConnection') ? localStorage.getItem('byConnection') : 'all',
   filterByDepID: localStorage.getItem('byDepID') ? localStorage.getItem('byDepID') : 'all',
 };
 
-function brigadesReducer(state = initialBrigadesState, action: { type: any; payload: string; }) {
+interface IListDataDefault {
+  type: 'SET_LIST_DATA_DEFAULT';
+  payload: Data[];
+}
+
+interface IListDataUi {
+  type: 'SET_LIST_DATA_UI';
+  payload: Data[];
+}
+
+interface ISelect {
+  type: 'FILTER_ITEMS_BY_DEPARTMENT';
+  payload: string;
+}
+
+export function brigadesReducer(state = initialBrigadesState, action: IListDataUi | IListDataDefault | ISelect) {
   switch (action.type) {
-    case GET_ITEMS_REQUEST:
+    case SET_LIST_DATA_DEFAULT:
       return {
         ...state,
-        loading: true,
-        error: null,
+        listDataDefault: action.payload,
       };
-    case GET_ITEMS_SUCCESS:
+
+    case SET_LIST_DATA_UI:
       return {
         ...state,
-        items: action.payload,
-        loading: false,
-        error: null,
-      };
-    case GET_ITEMS_FAIL:
-      return {
-        ...state,
-        items: [],
-        loading: false,
-        error: action.payload,
-      };
-    case FILTER_ITEMS_BY_CONNECTION:
-      localStorage.setItem('connectionStateId', action.payload);
-      return {
-        ...state,
-        filterByConnection: action.payload,
-      };
-    case FILTER_ITEMS_BY_DEPARTMENT:
-      localStorage.setItem('byDepID', action.payload);
-      return {
-        ...state,
-        filterByDepID: action.payload,
+        listDataUi: action.payload,
       };
     default:
       return state;
@@ -60,5 +63,5 @@ const rootReducer = combineReducers({
 
 export  {rootReducer};
 
-export const filterItemsByConnection = (state: number | null) => ({ type: FILTER_ITEMS_BY_CONNECTION, payload: state });
-export const filterItemsByDepartment = (depId: number | null) => ({ type: FILTER_ITEMS_BY_DEPARTMENT, payload: depId });
+export const setListDataDefault = (data: Data[]) => ({ type: SET_LIST_DATA_DEFAULT, payload: data });
+export const setListDataUi = (data: Data[]) => ({ type: SET_LIST_DATA_UI, payload: data });
