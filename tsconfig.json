@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/App.tsx.tsx", "src/index.jsx.jssrc/index.jsindex.js", "src/index.jsx.js", "src/App.tsx.tsxsrc/App.tsx/App.tsx", "src/index.jsx.js", "src/reducers/index.jscerssrc/reducers/index.jss", "src/reducers/index.js"  ]
 }
