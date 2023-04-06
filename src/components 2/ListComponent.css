@@ -22,7 +22,6 @@ list-component {
 
     .card {
         margin-block-start: 16px;
-        min-height: 350px;
     }
     
     @media (max-width: 767px) {
@@ -50,7 +49,7 @@ list-component {
       align-items: flex-start;
       margin-bottom: 20px;
     }
-    
+  
     .list-component > p {
       margin-top: 10px;
       margin-bottom: 10px;
